@@ -1,0 +1,20 @@
+meta {
+  name: 03 - Cadastrar
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/relogios
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "marca": "Orient",
+    "modelo": "Bambino",
+    "tipo": "Automático",
+    "preco": 1290.00
+  }
+}

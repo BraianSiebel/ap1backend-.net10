@@ -1,0 +1,20 @@
+meta {
+  name: 04 - Atualizar
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/relogios/4
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "marca": "Orient",
+    "modelo": "Bambino Version 2",
+    "tipo": "Automático",
+    "preco": 1190.00
+  }
+}

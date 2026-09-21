@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "ApiRelogios",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"]
+}
