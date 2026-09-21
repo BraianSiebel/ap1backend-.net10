@@ -90,4 +90,4 @@ Execute na ordem, logo após iniciar a API (o relógio criado recebe o id 4).
 
 ## Vídeo de demonstração
 
-🎥 Link do vídeo: **COLE_AQUI_O_LINK_PUBLICO_DO_VIDEO**
+🎥 Link do vídeo: https://drive.google.com/drive/folders/1fI53KGtHq-L2KF24BdKPERNm8qpwRPJn?usp=drive_link
