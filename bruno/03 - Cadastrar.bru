@@ -18,3 +18,14 @@ body:json {
     "preco": 1290.00
   }
 }
+
+script:post-response {
+  // guarda o id gerado pelo banco para usar no PUT, DELETE e na confirmação do 404
+  bru.setVar("relogioId", res.body.id);
+}
+
+tests {
+  test("retorna 201 Created", function() {
+    expect(res.status).to.equal(201);
+  });
+}

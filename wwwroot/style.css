@@ -1,0 +1,106 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+header {
+  background: #1e3a5f;
+  color: #fff;
+  padding: 20px 16px;
+  text-align: center;
+}
+
+header h1 { margin: 0 0 4px; }
+header p { margin: 0; opacity: 0.85; }
+
+main {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: grid;
+  gap: 24px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 { margin-top: 0; }
+
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input, select {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.acoes {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #1e3a5f;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+button:hover { opacity: 0.9; }
+button.secundario { background: #6b7280; }
+button.perigo { background: #b91c1c; }
+
+.cabecalho-lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+td.botoes { display: flex; gap: 6px; }
+
+#mensagem { min-height: 1.2em; margin-bottom: 0; }
+#mensagem.erro { color: #b91c1c; }
+#mensagem.sucesso { color: #047857; }
+
+@media (max-width: 600px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border-bottom: 2px solid #e5e7eb; padding: 8px 0; }
+  td { border: none; padding: 4px 0; }
+}

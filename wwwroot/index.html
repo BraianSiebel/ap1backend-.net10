@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Relógios</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⌚ Catálogo de Relógios</h1>
+    <p>Frontend integrado à API (<code>/api/relogios</code>) com dados no SQLite</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 id="titulo-form">Cadastrar relógio</h2>
+      <form id="form-relogio">
+        <input type="hidden" id="id">
+        <label>Marca
+          <input type="text" id="marca" required>
+        </label>
+        <label>Modelo
+          <input type="text" id="modelo" required>
+        </label>
+        <label>Tipo
+          <select id="tipo" required>
+            <option value="Digital">Digital</option>
+            <option value="Automático">Automático</option>
+            <option value="Quartzo">Quartzo</option>
+            <option value="Smartwatch">Smartwatch</option>
+          </select>
+        </label>
+        <label>Preço (R$)
+          <input type="number" id="preco" step="0.01" min="0" required>
+        </label>
+        <div class="acoes">
+          <button type="submit" id="btn-salvar">Cadastrar</button>
+          <button type="button" id="btn-cancelar" class="secundario" hidden>Cancelar edição</button>
+        </div>
+      </form>
+      <p id="mensagem" role="status"></p>
+    </section>
+
+    <section class="card">
+      <div class="cabecalho-lista">
+        <h2>Relógios cadastrados</h2>
+        <button type="button" id="btn-recarregar" class="secundario">Recarregar</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Tipo</th>
+            <th>Preço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="lista-relogios"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

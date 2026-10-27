@@ -5,7 +5,13 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/
+  url: {{baseUrl}}/api
   body: none
   auth: none
+}
+
+tests {
+  test("retorna 200 OK", function() {
+    expect(res.status).to.equal(200);
+  });
 }

@@ -1,74 +1,96 @@
+using ApiRelogios.Data;
+using ApiRelogios.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
-var relogios = new List<RelogioDto>
-{
-    new RelogioDto(1, "Casio", "F-91W", "Digital", 149.90m),
-    new RelogioDto(2, "Seiko", "Presage SRPB43", "Automático", 3499.00m),
-    new RelogioDto(3, "Apple", "Watch Series 10", "Smartwatch", 4299.00m)
-};
+// Serve o frontend (wwwroot/index.html) pela mesma origem da API
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
-app.MapGet("/", () => Results.Ok(new { mensagem = "API de Relógios está no ar" }));
+app.MapGet("/api", () => Results.Ok(new { mensagem = "API de Relógios está no ar" }));
 
-app.MapGet("/api/relogios", () =>
+app.MapGet("/api/relogios", async (AppDbContext db) =>
 {
+    var relogios = await db.Relogios
+        .OrderBy(relogio => relogio.Id)
+        .Select(relogio => new RelogioDto(relogio.Id, relogio.Marca, relogio.Modelo, relogio.Tipo, relogio.Preco))
+        .ToListAsync();
+
     return Results.Ok(relogios);
 });
 
-app.MapGet("/api/relogios/{id:int}", (int id) =>
+app.MapGet("/api/relogios/{id:int}", async (int id, AppDbContext db) =>
 {
-    var relogio = relogios.Find(relogioDaLista => relogioDaLista.Id == id);
+    var relogio = await db.Relogios.FindAsync(id);
 
     if (relogio is null)
     {
         return Results.NotFound(new { mensagem = $"Relógio com id {id} não encontrado" });
     }
 
-    return Results.Ok(relogio);
+    return Results.Ok(ParaDto(relogio));
 });
 
-app.MapPost("/api/relogios", (RelogioEntradaDto dados) =>
+app.MapPost("/api/relogios", async (RelogioEntradaDto dados, AppDbContext db) =>
 {
-    int proximoId = relogios.Count == 0 ? 1 : relogios.Max(relogio => relogio.Id) + 1;
+    var novoRelogio = new Relogio
+    {
+        Marca = dados.Marca,
+        Modelo = dados.Modelo,
+        Tipo = dados.Tipo,
+        Preco = dados.Preco
+    };
 
-    var novoRelogio = new RelogioDto(proximoId, dados.Marca, dados.Modelo, dados.Tipo, dados.Preco);
+    db.Relogios.Add(novoRelogio);
+    await db.SaveChangesAsync();
 
-    relogios.Add(novoRelogio);
-
-    return Results.Created($"/api/relogios/{novoRelogio.Id}", novoRelogio);
+    return Results.Created($"/api/relogios/{novoRelogio.Id}", ParaDto(novoRelogio));
 });
 
-app.MapPut("/api/relogios/{id:int}", (int id, RelogioEntradaDto dados) =>
+app.MapPut("/api/relogios/{id:int}", async (int id, RelogioEntradaDto dados, AppDbContext db) =>
 {
-    int indice = relogios.FindIndex(relogioDaLista => relogioDaLista.Id == id);
+    var relogio = await db.Relogios.FindAsync(id);
 
-    if (indice == -1)
+    if (relogio is null)
     {
         return Results.NotFound(new { mensagem = $"Relógio com id {id} não encontrado" });
     }
 
-    var relogioAtualizado = new RelogioDto(id, dados.Marca, dados.Modelo, dados.Tipo, dados.Preco);
+    relogio.Marca = dados.Marca;
+    relogio.Modelo = dados.Modelo;
+    relogio.Tipo = dados.Tipo;
+    relogio.Preco = dados.Preco;
 
-    relogios[indice] = relogioAtualizado;
+    await db.SaveChangesAsync();
 
-    return Results.Ok(relogioAtualizado);
+    return Results.Ok(ParaDto(relogio));
 });
 
-app.MapDelete("/api/relogios/{id:int}", (int id) =>
+app.MapDelete("/api/relogios/{id:int}", async (int id, AppDbContext db) =>
 {
-    int indice = relogios.FindIndex(relogioDaLista => relogioDaLista.Id == id);
+    var relogio = await db.Relogios.FindAsync(id);
 
-    if (indice == -1)
+    if (relogio is null)
     {
         return Results.NotFound(new { mensagem = $"Relógio com id {id} não encontrado" });
     }
 
-    relogios.RemoveAt(indice);
+    db.Relogios.Remove(relogio);
+    await db.SaveChangesAsync();
 
     return Results.NoContent();
 });
 
 app.Run();
+
+static RelogioDto ParaDto(Relogio relogio) =>
+    new(relogio.Id, relogio.Marca, relogio.Modelo, relogio.Tipo, relogio.Preco);
 
 record RelogioDto(int Id, string Marca, string Modelo, string Tipo, decimal Preco);
 

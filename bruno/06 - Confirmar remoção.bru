@@ -5,7 +5,13 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/relogios/4
+  url: {{baseUrl}}/api/relogios/{{relogioId}}
   body: none
   auth: none
+}
+
+tests {
+  test("retorna 404 Not Found", function() {
+    expect(res.status).to.equal(404);
+  });
 }

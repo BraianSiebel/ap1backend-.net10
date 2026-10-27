@@ -5,7 +5,13 @@ meta {
 }
 
 delete {
-  url: {{baseUrl}}/api/relogios/4
+  url: {{baseUrl}}/api/relogios/{{relogioId}}
   body: none
   auth: none
+}
+
+tests {
+  test("retorna 204 No Content", function() {
+    expect(res.status).to.equal(204);
+  });
 }
