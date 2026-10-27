@@ -21,7 +21,6 @@ function mostrarMensagem(texto, tipo) {
   mensagem.className = tipo;
 }
 
-// GET /api/relogios
 async function carregarRelogios() {
   try {
     const resposta = await fetch(API_URL);
@@ -54,7 +53,6 @@ function renderizarLista(relogios) {
         <button type="button" class="secundario">Editar</button>
         <button type="button" class="perigo">Excluir</button>
       </td>`;
-    // textContent evita injetar HTML vindo dos dados
     linha.children[1].textContent = relogio.marca;
     linha.children[2].textContent = relogio.modelo;
     linha.children[3].textContent = relogio.tipo;
@@ -67,7 +65,6 @@ function renderizarLista(relogios) {
   }
 }
 
-// GET /api/relogios/{id} para preencher o formulário de edição
 async function editarRelogio(id) {
   try {
     const resposta = await fetch(`${API_URL}/${id}`);
@@ -100,7 +97,6 @@ function limparFormulario() {
   btnCancelar.hidden = true;
 }
 
-// POST /api/relogios (novo) ou PUT /api/relogios/{id} (edição)
 form.addEventListener("submit", async (evento) => {
   evento.preventDefault();
 
@@ -139,7 +135,6 @@ form.addEventListener("submit", async (evento) => {
   carregarRelogios();
 });
 
-// DELETE /api/relogios/{id}
 async function excluirRelogio(relogio) {
   if (!confirm(`Excluir o relógio ${relogio.marca} ${relogio.modelo}?`)) return;
 

@@ -20,7 +20,6 @@ body:json {
 }
 
 script:post-response {
-  // guarda o id gerado pelo banco para usar no PUT, DELETE e na confirmação do 404
   bru.setVar("relogioId", res.body.id);
 }
 

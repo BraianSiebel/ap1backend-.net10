@@ -9,7 +9,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // SQLite não tem tipo decimal nativo; guarda como REAL para permitir ordenar e comparar
         modelBuilder.Entity<Relogio>().Property(relogio => relogio.Preco).HasConversion<double>();
 
         modelBuilder.Entity<Relogio>().HasData(

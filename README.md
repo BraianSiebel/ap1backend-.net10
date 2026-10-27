@@ -143,7 +143,7 @@ código de status esperado.
 
 ## Vídeo de demonstração — AP2
 
-🎥 Link do vídeo: **(inserir link público do vídeo da AP2)**
+🎥 Link do vídeo: https://drive.google.com/file/d/10rQgrhs12EMJHV3Ycs8agLCC5XgtxkEr/view?usp=sharing
 
 ## Vídeo de demonstração — AP1
 

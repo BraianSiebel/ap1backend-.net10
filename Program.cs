@@ -9,7 +9,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-// Serve o frontend (wwwroot/index.html) pela mesma origem da API
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
